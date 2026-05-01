@@ -146,3 +146,73 @@ With real-world data and feedback loops, this system can evolve into a fully ada
 ## Data Sources
 
 See: `docs/references/enviotech_data_sources.md`
+
+
+### 1. Traffic Data (Germany – Multi-class Vehicle Counts)
+
+- **Provider:** Bundesanstalt für Straßenwesen (BASt)  
+- **Access:** https://sensoto.io/en/  
+- **License:** Datenlizenz Deutschland – Namensnennung 2.0 (CC BY 2.0 DE)  
+- **Description:** Hourly traffic measurements including cars, trucks, buses, and motorcycles from German road sensors  
+
+- **Variables Used:**
+  - KFZ_R1 (total vehicles)
+  - Pkw_R1 (cars)
+  - Lkw_R1 (trucks)
+  - Bus_R1 (buses)
+  - Mot_R1 (motorcycles)
+
+- **Time Range:** 2017–2026 (subset used)  
+
+- **Processing:**
+  - Data cleaned and filtered  
+  - Aggregated across selected time windows  
+  - Transformed into 10-minute intervals for simulation and ML modeling  
+
+- **Example Sensor Source (Frankfurt Region):**
+  - Network: Permanent counting stations (Autobahn & Bundesstraßen, Germany)  
+  - Device ID: 6514  
+  - Platform: https://sensoto.io/en/  
+  - Location: Frankfurt (representative urban traffic node used for modeling)  
+
+---
+
+### 2. Sunshine Duration Data (Germany)
+
+- **Provider:** Statista  
+- **Title:** Average monthly sunshine hours in Germany (2024–2025)  
+
+- **Description:**
+  Monthly sunshine duration compared with long-term climatological averages (1961–1990 baseline)
+
+- **Usage:**
+  - Environmental context for smart lighting optimization  
+  - Supports modeling of daylight-dependent dimming behavior  
+
+- **Release Date:** January 2025  
+
+---
+
+### 3. Derived / Synthetic Data
+
+- **Type:** Poisson-based simulation  
+
+- **Description:**
+  - Hourly traffic expanded into realistic sparse 10-minute intervals  
+  - Uses stochastic arrival modeling (Poisson process with λ estimation)  
+
+- **Purpose:**
+  - Enable higher temporal resolution for prediction  
+  - Support ML training where fine-grained real data was unavailable  
+
+---
+
+## Data Integration
+
+Traffic and environmental datasets were combined to create a feature-rich dataset for intelligent street lighting prediction.
+
+**Engineered Features Include:**
+- Time-based variables (hour, day of week, night indicator)  
+- Traffic intensity metrics  
+- Probability-based sparsity indicators  
+- Environmental context (sunlight availability)  
